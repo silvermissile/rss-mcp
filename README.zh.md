@@ -1,5 +1,7 @@
 # RSS MCP 服务器
 
+[![NPM Version](https://img.shields.io/npm/v/rss-mcp.svg)](https://www.npmjs.com/package/rss-mcp)
+
 这是一个基于 TypeScript 构建的 Model Context Protocol (MCP) 服务器。它提供了一个通用的工具来获取和解析任何标准的 RSS/Atom feed，并且还特别支持 [RSSHub](https://docs.rsshub.app/) 的 feed。通过此服务器，语言模型或其他 MCP 客户端可以轻松地从各种网络来源检索结构化内容。
 
 服务器内置了多个公共 RSSHub 实例列表，并支持通过轮询机制自动选择可用的实例，大大提高了数据获取的成功率和稳定性。
@@ -8,6 +10,7 @@
 
 - **通用 Feed 解析**: 从给定的 URL 获取和解析任何标准的 RSS/Atom feed。
 - **增强的 RSSHub 支持**: 提供一个名为 `get_feed` 的工具，通过 MCP 获取任何 RSSHub 支持的 feed，并支持多实例。
+- **可自定义的条目数量**: 可指定要检索的 feed 条目数量，并支持获取所有条目。
 - **多实例支持**: 内置多个公共 RSSHub 实例地址，并自动轮询以查找可用服务。
 - **智能 URL 解析**: 支持标准的 RSSHub URL 和简化的 `rsshub://` 协议格式。
 - **优先实例配置**: 允许通过环境变量 `PRIORITY_RSSHUB_INSTANCE` 设置一个优先使用的 RSSHub 实例。
@@ -20,7 +23,7 @@
 首先，克隆该项目仓库，然后安装所需的依赖项。
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/your-username/rss-mcp.git
 cd rss-mcp
 npm install
 ```
@@ -63,10 +66,17 @@ PRIORITY_RSSHUB_INSTANCE=https://my-rsshub.example.com
 
 ### 方法一：使用 `npx` (推荐)
 
-如果该软件包已发布到 npm，您可以使用 `npx` 来运行服务器，而无需在本地安装。这是最简单的方法。
+该软件包已发布到 npm，您可以使用 `npx` 来运行服务器，而无需在本地安装。这是最简单的方法。
 
-1.  **找到您的 MCP 配置文件。** (例如 `~/.cursor/mcp_settings.json`)
-2.  添加以下服务器条目：
+1.  **直接调用**:
+    您可以直接在终端中使用 `npx` 运行服务器：
+
+    ```bash
+    npx rss-mcp
+    ```
+
+2.  **MCP 客户端配置**:
+    要与像 Cursor 这样的 MCP 客户端集成，请将以下内容添加到您的配置文件中 (例如 `~/.cursor/mcp_settings.json`):
 
     ```json
     {
@@ -107,6 +117,9 @@ PRIORITY_RSSHUB_INSTANCE=https://my-rsshub.example.com
 - `url` (string, required): 要获取的 RSS feed 的 URL。支持两种格式：
     1.  **标准 URL**: `https://rsshub.app/bilibili/user/dynamic/208259`
     2.  **`rsshub://` 协议**: `rsshub://bilibili/user/dynamic/208259` (服务器会自动匹配可用的实例)
+- `count` (number, optional): 要检索的 RSS feed 条目数。
+    - **默认值**: `1`
+    - **检索全部**: `0`
 
 #### 输出
 

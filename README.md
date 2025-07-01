@@ -1,5 +1,7 @@
 # RSS MCP Server
 
+[![NPM Version](https://img.shields.io/npm/v/rss-mcp.svg)](https://www.npmjs.com/package/rss-mcp)
+
 This is a Model Context Protocol (MCP) server built with TypeScript. It provides a versatile tool to fetch and parse any standard RSS/Atom feed, and also includes special support for [RSSHub](https://docs.rsshub.app/) feeds. With this server, language models or other MCP clients can easily retrieve structured content from various web sources.
 
 The server comes with a built-in list of public RSSHub instances and supports a polling mechanism to automatically select an available instance, significantly improving the success rate and stability of data retrieval.
@@ -8,6 +10,7 @@ The server comes with a built-in list of public RSSHub instances and supports a 
 
 - **Universal Feed Parsing**: Fetch and parse any standard RSS/Atom feed from a given URL.
 - **Enhanced RSSHub Support**: Provides a tool named `get_feed` to fetch any RSSHub-supported feed via MCP, with multi-instance support.
+- **Customizable Item Count**: Specify the number of feed items to retrieve, with support for fetching all items.
 - **Multi-instance Support**: Includes a list of public RSSHub instances and automatically polls to find an available service.
 - **Smart URL Parsing**: Supports standard RSSHub URLs and a simplified `rsshub://` protocol format.
 - **Priority Instance Configuration**: Allows setting a preferred RSSHub instance via the `PRIORITY_RSSHUB_INSTANCE` environment variable.
@@ -20,7 +23,7 @@ The server comes with a built-in list of public RSSHub instances and supports a 
 First, clone the project repository, then install the required dependencies.
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/veithly/rss-mcp.git
 cd rss-mcp
 npm install
 ```
@@ -63,10 +66,17 @@ To use this server with an MCP client like Cursor, you need to add it to your co
 
 ### Method 1: Using `npx` (Recommended)
 
-If the package is published to npm, you can use `npx` to run the server without a local installation. This is the easiest method.
+This package is published on npm, so you can use `npx` to run the server without a local installation. This is the easiest method.
 
-1.  **Locate your MCP configuration file.** (e.g., `~/.cursor/mcp_settings.json`)
-2.  Add the following server entry:
+1.  **Direct Invocation**:
+    You can run the server directly from your terminal using `npx`:
+
+    ```bash
+    npx rss-mcp
+    ```
+
+2.  **MCP Client Configuration**:
+    To integrate with an MCP client like Cursor, add the following to your configuration file (e.g., `~/.cursor/mcp_settings.json`):
 
     ```json
     {
@@ -107,6 +117,9 @@ Fetches and parses an RSS feed from a given URL. It supports both standard RSS/A
 - `url` (string, required): The URL of the RSS feed to fetch. Two formats are supported:
     1.  **Standard URL**: `https://rsshub.app/bilibili/user/dynamic/208259`
     2.  **`rsshub://` protocol**: `rsshub://bilibili/user/dynamic/208259` (the server will automatically match an available instance)
+- `count` (number, optional): The number of RSS feed items to retrieve.
+    - **Default**: `1`
+    - **Retrieve all**: `0`
 
 #### Output
 
