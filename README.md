@@ -4,6 +4,10 @@
 
 This is a Model Context Protocol (MCP) server built with TypeScript. It provides a versatile tool to fetch and parse any standard RSS/Atom feed, and also includes special support for [RSSHub](https://docs.rsshub.app/) feeds. With this server, language models or other MCP clients can easily retrieve structured content from various web sources.
 
+<a href="https://glama.ai/mcp/servers/@veithly/rss-mcp">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@veithly/rss-mcp/badge" alt="RSS Server MCP server" />
+</a>
+
 The server comes with a built-in list of public RSSHub instances and supports a polling mechanism to automatically select an available instance, significantly improving the success rate and stability of data retrieval.
 
 ## ✨ Features
